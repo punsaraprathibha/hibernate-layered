@@ -1,6 +1,7 @@
 package lk.ijse.gdse.hibernate.layered;
 import lk.ijse.gdse.hibernate.layered.entity.Customer;
 import lk.ijse.gdse.hibernate.layered.service.CustomerService;
+import lk.ijse.gdse.hibernate.layered.service.impl.CustomerServiceImpl;
 
 /**
  * This is the Main class of this Hibernate Application
@@ -13,7 +14,7 @@ public class AppInitializer {
      */
     public static void main(String[] args) throws InterruptedException {
 
-        CustomerService customerService = CustomerService
+        CustomerService customerService = CustomerServiceImpl
                 .getInstance();
         Customer customer = getCustomerEntity();
 
