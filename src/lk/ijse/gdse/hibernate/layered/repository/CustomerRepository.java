@@ -49,19 +49,8 @@ public class CustomerRepository {
      * @return boolean
      * Performs a given customer object update operation
      */
-    public boolean updateCustomer(Customer customer) {
-        Transaction transaction = session.beginTransaction();
-        try {
-            session.update(customer);
-            transaction.commit();
-            session.close();
-            return true;
-        } catch (Exception ex) {
-            transaction.rollback();
-            session.close();
-            ex.printStackTrace();
-            return false;
-        }
+    public void updateCustomer(Customer customer) {
+        session.update(customer);
     }
 
     /**
@@ -70,14 +59,7 @@ public class CustomerRepository {
      * Retrieves customer object data based on the given customer id
      */
     public Customer getCustomer(long id) {
-        try {
-            Customer customer = session.get(Customer.class, id);
-            session.close(); // We've closed the unclosed sessions in previous week's code
-            return customer;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw ex;
-        }
+        return session.get(Customer.class, id);
     }
 
     /**
@@ -85,19 +67,8 @@ public class CustomerRepository {
      * @return boolean
      * Deletes a specific customer by customer object which is passed
      */
-    public boolean deleteCustomer(Customer customer) {
-        Transaction transaction = session.beginTransaction();
-        try {
-            session.delete(customer);
-            transaction.commit();
-            session.close(); // We've closed the unclosed sessions in previous week's code
-            return true;
-        } catch (Exception ex) {
-            transaction.rollback();
-            ex.printStackTrace();
-            session.close(); // We've closed the unclosed sessions in previous week's code
-            return false;
-        }
+    public void deleteCustomer(Customer customer) {
+        session.delete(customer);
     }
 
     // HQL - Hibernate Query Language

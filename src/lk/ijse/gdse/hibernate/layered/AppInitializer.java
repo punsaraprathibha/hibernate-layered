@@ -2,6 +2,8 @@ package lk.ijse.gdse.hibernate.layered;
 import lk.ijse.gdse.hibernate.layered.entity.Customer;
 import lk.ijse.gdse.hibernate.layered.projection.CustomerDetailDto;
 import lk.ijse.gdse.hibernate.layered.repository.CustomerRepository;
+import lk.ijse.gdse.hibernate.layered.service.CustomerService;
+
 import java.util.List;
 
 /**
@@ -15,30 +17,37 @@ public class AppInitializer {
      */
     public static void main(String[] args) throws InterruptedException {
 
-        CustomerRepository customerRepository = new CustomerRepository();
+        CustomerService customerService = CustomerService
+                .getInstance();
         Customer customer = getCustomerEntity();
 
         // 1. Performs Save/Insert through Customer Repository
-        customerRepository.saveCustomer(customer);
+        customerService.saveCustomer(customer);
 
-        customerRepository = new CustomerRepository();
-        List<Customer> customers = customerRepository.getAllCustomers();
-        for (Customer customer1 : customers) {
-            System.out.println(customer1);
-        }
+        Customer existingCustomer = customerService.getCustomer(1L);
+        existingCustomer.setAddress("Matara");
 
-        customerRepository = new CustomerRepository();
-        List<Customer> jpqlCustomers = customerRepository.getAllJPQLCustomers();
-        for (Customer customer1 : jpqlCustomers) {
-            System.out.println(customer1);
-        }
+        customerService.updateCustomer(existingCustomer);
 
-        // Now this Projection works. Please refer the CustomerRepository
-        customerRepository = new CustomerRepository();
-        List<CustomerDetailDto> jpqlCustomerProj = customerRepository.getAllCustomerProjection();
-        for (CustomerDetailDto customer1 : jpqlCustomerProj) {
-            System.out.println(customer1);
-        }
+        customerService.deleteCustomer(customer);
+
+//        List<Customer> customers = customerService
+//                .getAllCustomers();
+//        for (Customer customer1 : customers) {
+//            System.out.println(customer1);
+//        }
+//
+//        List<Customer> jpqlCustomers = customerService
+//                .getAllJPQLCustomers();
+//        for (Customer customer1 : jpqlCustomers) {
+//            System.out.println(customer1);
+//        }
+//
+//        // Now this Projection works. Please refer the CustomerRepository
+//        List<CustomerDetailDto> jpqlCustomerProj = customerService.getAllCustomerProjection();
+//        for (CustomerDetailDto customer1 : jpqlCustomerProj) {
+//            System.out.println(customer1);
+//        }
     }
 
     private static Customer getCustomerEntity() {

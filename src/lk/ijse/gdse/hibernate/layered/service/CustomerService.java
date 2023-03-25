@@ -9,13 +9,11 @@ import org.hibernate.Transaction;
 public class CustomerService {
 
     private static CustomerService customerService;
-    private final Session session;
+    private Session session;
 
     private final CustomerRepository customerRepository;
 
     private CustomerService () {
-        session = SessionFactoryConfig.getInstance()
-                .getSession();
         customerRepository = CustomerRepository.getInstance();
     }
 
@@ -26,9 +24,11 @@ public class CustomerService {
     }
 
     public Long saveCustomer(Customer customer) {
+        session = SessionFactoryConfig.getInstance()
+                .getSession();
         Transaction transaction = session.beginTransaction();
         try {
-            customerRepository.setSession();
+            customerRepository.setSession(session);
             Long id = customerRepository.saveCustomer(customer); // <= Hibernate
             // session.persist(customer); <= JPA
             transaction.commit();
@@ -39,6 +39,56 @@ public class CustomerService {
             session.close();
             ex.printStackTrace();
             return -1L;
+        }
+    }
+
+    public Customer getCustomer(long id) {
+        try {
+            session = SessionFactoryConfig.getInstance()
+                    .getSession();
+            customerRepository.setSession(session);
+            Customer customer = customerRepository.getCustomer(id);
+            session.close(); // We've closed the unclosed sessions in previous week's code
+            return customer;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+    }
+
+    public boolean updateCustomer(Customer customer) {
+        session = SessionFactoryConfig.getInstance()
+                .getSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            customerRepository.setSession(session);
+            customerRepository.updateCustomer(customer);
+            transaction.commit();
+            session.close();
+            return true;
+        } catch (Exception ex) {
+            transaction.rollback();
+            session.close();
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteCustomer(Customer customer) {
+        session = SessionFactoryConfig.getInstance()
+                .getSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            customerRepository.setSession(session);
+            customerRepository.deleteCustomer(customer);
+            transaction.commit();
+            session.close(); // We've closed the unclosed sessions in previous week's code
+            return true;
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            session.close(); // We've closed the unclosed sessions in previous week's code
+            return false;
         }
     }
 }
