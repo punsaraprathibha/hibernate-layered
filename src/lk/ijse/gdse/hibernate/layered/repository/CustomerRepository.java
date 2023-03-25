@@ -13,7 +13,7 @@ import java.util.List;
  * Defines a Customer Repository to Manage All
  * the CRUD Operations in a single place
  */
-public class CustomerRepository {
+public class CustomerRepository implements CrudRepository<Customer, Long>{
 
     private Session session;
     private static CustomerRepository customerRepository;
@@ -40,7 +40,7 @@ public class CustomerRepository {
      * @return java.lang.Long
      * Performs a customer object save (persistence) operation
      */
-    public Long saveCustomer(Customer customer) {
+    public Long save(Customer customer) {
         return (Long) session.save(customer);
     }
 
@@ -49,7 +49,7 @@ public class CustomerRepository {
      * @return boolean
      * Performs a given customer object update operation
      */
-    public void updateCustomer(Customer customer) {
+    public void update(Customer customer) {
         session.update(customer);
     }
 
@@ -58,7 +58,8 @@ public class CustomerRepository {
      * @return lk.ijse.gdse.hibernate.entity.Customer
      * Retrieves customer object data based on the given customer id
      */
-    public Customer getCustomer(long id) {
+    @Override
+    public Customer get(Long id) {
         return session.get(Customer.class, id);
     }
 
@@ -67,7 +68,7 @@ public class CustomerRepository {
      * @return boolean
      * Deletes a specific customer by customer object which is passed
      */
-    public void deleteCustomer(Customer customer) {
+    public void delete(Customer customer) {
         session.delete(customer);
     }
 

@@ -29,7 +29,7 @@ public class CustomerService {
         Transaction transaction = session.beginTransaction();
         try {
             customerRepository.setSession(session);
-            Long id = customerRepository.saveCustomer(customer); // <= Hibernate
+            Long id = customerRepository.save(customer); // <= Hibernate
             // session.persist(customer); <= JPA
             transaction.commit();
             session.close();
@@ -47,7 +47,7 @@ public class CustomerService {
             session = SessionFactoryConfig.getInstance()
                     .getSession();
             customerRepository.setSession(session);
-            Customer customer = customerRepository.getCustomer(id);
+            Customer customer = customerRepository.get(id);
             session.close(); // We've closed the unclosed sessions in previous week's code
             return customer;
         } catch (Exception ex) {
@@ -62,7 +62,7 @@ public class CustomerService {
         Transaction transaction = session.beginTransaction();
         try {
             customerRepository.setSession(session);
-            customerRepository.updateCustomer(customer);
+            customerRepository.update(customer);
             transaction.commit();
             session.close();
             return true;
@@ -80,7 +80,7 @@ public class CustomerService {
         Transaction transaction = session.beginTransaction();
         try {
             customerRepository.setSession(session);
-            customerRepository.deleteCustomer(customer);
+            customerRepository.delete(customer);
             transaction.commit();
             session.close(); // We've closed the unclosed sessions in previous week's code
             return true;
