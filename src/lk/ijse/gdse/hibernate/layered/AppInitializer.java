@@ -1,10 +1,6 @@
 package lk.ijse.gdse.hibernate.layered;
 import lk.ijse.gdse.hibernate.layered.entity.Customer;
-import lk.ijse.gdse.hibernate.layered.projection.CustomerDetailDto;
-import lk.ijse.gdse.hibernate.layered.repository.CustomerRepository;
 import lk.ijse.gdse.hibernate.layered.service.CustomerService;
-
-import java.util.List;
 
 /**
  * This is the Main class of this Hibernate Application

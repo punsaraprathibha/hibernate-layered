@@ -2,6 +2,7 @@ package lk.ijse.gdse.hibernate.layered.service;
 
 import lk.ijse.gdse.hibernate.layered.entity.Customer;
 import lk.ijse.gdse.hibernate.layered.repository.CustomerRepository;
+import lk.ijse.gdse.hibernate.layered.repository.impl.CustomerRepositoryImpl;
 import lk.ijse.gdse.hibernate.layered.util.SessionFactoryConfig;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,7 +15,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
 
     private CustomerService () {
-        customerRepository = CustomerRepository.getInstance();
+        customerRepository = CustomerRepositoryImpl.getInstance();
     }
 
     public static CustomerService getInstance() {
