@@ -1,6 +1,6 @@
 package lk.ijse.gdse.hibernate.layered.repository;
 
-public interface CrudRepository<T, ID> {
+public interface CrudRepository<T, ID> extends SuperRepository{
 
     ID save(T object);
 

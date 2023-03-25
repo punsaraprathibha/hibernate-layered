@@ -5,5 +5,4 @@ import org.hibernate.Session;
 
 public interface CustomerRepository extends CrudRepository<Customer, Long>{
 
-    void setSession(Session session);
 }
