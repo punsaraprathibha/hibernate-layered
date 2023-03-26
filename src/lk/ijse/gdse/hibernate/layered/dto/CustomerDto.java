@@ -1,29 +1,19 @@
-package lk.ijse.gdse.hibernate.layered.entity;
+package lk.ijse.gdse.hibernate.layered.dto;
 
-import lk.ijse.gdse.hibernate.layered.dto.CustomerDto;
+import lk.ijse.gdse.hibernate.layered.entity.Customer;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-@Entity
-@Table(name = "customer")
-public class Customer implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
+public class CustomerDto implements Serializable {
+
     private long id;
-    @Column(name = "customer_name")
     private String name;
-    @Column(name = "address")
     private String address;
-    @Column(name = "age")
     private int age;
 
-    public Customer() {}
+    public CustomerDto() {}
 
-    public Customer(long id, String name, String address, int age) {
+    public CustomerDto(long id, String name, String address, int age) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -64,7 +54,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "Customer{" +
+        return "CustomerDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
@@ -72,8 +62,8 @@ public class Customer implements Serializable {
                 '}';
     }
 
-    public CustomerDto toDto() {
-        CustomerDto customerDto = new CustomerDto();
+    public Customer toEntity() {
+        Customer customerDto = new Customer();
         customerDto.setId(this.id);
         customerDto.setName(this.name);
         customerDto.setAddress(this.address);

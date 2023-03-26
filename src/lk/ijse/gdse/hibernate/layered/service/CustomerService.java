@@ -1,19 +1,24 @@
 package lk.ijse.gdse.hibernate.layered.service;
 
+import lk.ijse.gdse.hibernate.layered.dto.CustomerDto;
 import lk.ijse.gdse.hibernate.layered.entity.Customer;
-import lk.ijse.gdse.hibernate.layered.repository.CustomerRepository;
-import lk.ijse.gdse.hibernate.layered.repository.impl.CustomerRepositoryImpl;
-import lk.ijse.gdse.hibernate.layered.util.SessionFactoryConfig;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import lk.ijse.gdse.hibernate.layered.projection.CustomerDetailDto;
+
+import java.util.List;
 
 public interface CustomerService {
 
-    Long saveCustomer(Customer customer);
+    Long saveCustomer(CustomerDto customer);
 
-    Customer getCustomer(long id);
+    CustomerDto getCustomer(long id);
 
-    boolean updateCustomer(Customer customer);
+    boolean updateCustomer(CustomerDto customer);
 
-    boolean deleteCustomer(Customer customer);
+    boolean deleteCustomer(CustomerDto customer);
+
+    List<CustomerDto> getAllCustomers();
+
+    List<CustomerDto> getAllJPQLCustomers();
+
+    List<CustomerDetailDto> getAllCustomerProjection();
 }

@@ -17,11 +17,6 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     private Session session;
     private static CustomerRepositoryImpl customerRepositoryImpl;
 
-    @Override
-    public void setSession(Session session) {
-        this.session = session;
-    }
-
     /**
      * No Args Constructor
      * Initializes Session Object which is later going to
@@ -35,11 +30,17 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 : customerRepositoryImpl;
     }
 
+    @Override
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
     /**
      * @param customer : lk.ijse.gdse.hibernate.entity.Customer
      * @return java.lang.Long
      * Performs a customer object save (persistence) operation
      */
+    @Override
     public Long save(Customer customer) {
         return (Long) session.save(customer);
     }
@@ -49,6 +50,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
      * @return boolean
      * Performs a given customer object update operation
      */
+    @Override
     public void update(Customer customer) {
         session.update(customer);
     }
@@ -68,11 +70,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
      * @return boolean
      * Deletes a specific customer by customer object which is passed
      */
+    @Override
     public void delete(Customer customer) {
         session.delete(customer);
     }
 
     // HQL - Hibernate Query Language
+    @Override
     public List<Customer> getAllCustomers() {
         String sqlQuery = "FROM Customer";
         Query query = session.createQuery(sqlQuery);
@@ -82,6 +86,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     // JPQL
+    @Override
     public List<Customer> getAllJPQLCustomers() {
         String sql = "SELECT C FROM Customer AS C"; // alias
         Query query = session.createQuery(sql);
@@ -91,6 +96,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     // Here we're going to do a projection (which means getting only a set of selected attributes as the result)
+    @Override
     public List<CustomerDetailDto> getAllCustomerProjection() {
         String sql = "SELECT new lk.ijse.gdse.hibernate.layered.projection.CustomerDetailDto(C.name, C.address, C.age) FROM Customer AS C"; // In here the error was not defining the new keyword
         Query query = session.createQuery(sql);
