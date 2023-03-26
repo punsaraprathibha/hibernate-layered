@@ -62,6 +62,7 @@ public class CustomerDto implements Serializable {
                 '}';
     }
 
+    // Use as a custom converter to easily convert DTO to an Entity type (Code Re-usability)
     public Customer toEntity() {
         Customer customerDto = new Customer();
         customerDto.setId(this.id);
